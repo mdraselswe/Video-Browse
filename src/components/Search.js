@@ -19,7 +19,9 @@ class Search extends React.Component {
   render () {
     return (
       <form onSubmit={this.onFormSubmit}>
-        <input type='text' placeholder='Please search your video' onChange={this.onInputChange} />
+        <div className="ui input" style={{width: '100%'}}>
+          <input type='text' placeholder='Please search your video' onChange={this.onInputChange} />
+        </div>
       </form>
     )
   }

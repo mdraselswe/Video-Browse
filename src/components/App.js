@@ -8,7 +8,12 @@ import VideoList from './VideoList'
 
 class App extends React.Component {
   state = {
-    videos: []
+    videos: [],
+    selectedVideo: null
+  }
+
+  componentDidMount () {
+    this.onSearchSubmit('buildings')
   }
 
   onSearchSubmit = async term => {
@@ -24,16 +29,30 @@ class App extends React.Component {
       }
     )
 
-    this.setState({ videos: response.data.items })
+    this.setState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+    })
 
     console.log(response.data.items)
   }
+
+  onSelectedVideo = video => {
+    console.log(video)
+    this.setState({ selectedVideo: video })
+  }
+
   render () {
     return (
-      <div>
+      <div className='ui container'>
         <Search onSearchSubmit={this.onSearchSubmit} />
-        <VideoDetails />
-        <VideoList videos={this.state.videos} />
+        <div style={{display: 'flex'}}>
+          <VideoDetails selectedVideo={this.state.selectedVideo} />
+          <VideoList
+            onSelectedVideo={this.onSelectedVideo}
+            videos={this.state.videos}
+          />
+        </div>
       </div>
     )
   }
